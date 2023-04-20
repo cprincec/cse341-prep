@@ -1,15 +1,18 @@
 // import the express module
 const express = require('express');
-
-const routes = require('./routes');
+const mongodb = require('./mongodb/connect')
+require('dotenv').config();
 
 // create an express application
 const app = express();
-let port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use('/', require('./routes'));
-app.listen(port, console.log(`Server running at port ${port}`));
 
+mongodb.main().catch(console.error)
+.then(() => {
+    app.listen(port, console.log(`Server running at port ${port} and  database connected`));
+})
 
 
 
