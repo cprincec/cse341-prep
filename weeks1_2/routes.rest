@@ -1,1 +1,10 @@
-http://localhost:3000
+// Development URLs
+# http://localhost:3000
+# http://localhost:3000/contacts
+# http://localhost:3000/contacts/644402cbf75c6f2b4c479a4b
+# http://localhost:3000/contacts/644402cbf75c6f2b4c479a4c
+# http://localhost:3000/contacts/644402cbf75c6f2b4c479a4d
+
+
+//Production URLs
+
