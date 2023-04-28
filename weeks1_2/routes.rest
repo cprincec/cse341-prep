@@ -1,14 +1,84 @@
-// Development URLs
-# http://localhost:3000
-# http://localhost:3000/contacts
-# http://localhost:3000/contacts/644402cbf75c6f2b4c479a4b
-# http://localhost:3000/contacts/644402cbf75c6f2b4c479a4c
-# http://localhost:3000/contacts/644402cbf75c6f2b4c479a4d
+@PORT = {{$dotenv PORT}}
+
+### Development URLs
+ http://localhost:3000
+
+### Get contacts
+ http://localhost:{{PORT}}/contacts
+
+### Get Single contact
+http://localhost:{{PORT}}/contacts/644402cbf75c6f2b4c479a4b
+# http://localhost:{{PORT}}/contacts/644402cbf75c6f2b4c479a4c
+# http://localhost:{{PORT}}/contacts/644402cbf75c6f2b4c479a4d
+
+
+### Create contact
+POST http://localhost:{{PORT}}/contacts
+Content-Type: application/json
+
+{
+    "firstName": "Chukwu",
+    "lastName": "Chukwu",
+    "email": "chukwuprincec@gmail.com",
+    "favoriteColor": "black",
+    "birthday": "20/08/2023"
+}
+
+
+### Update contact
+PUT http://localhost:{{PORT}}/contacts/644b6d0b6a244e684449f1b8
+Content-Type: application/json
+
+{
+    "firstName": "Prince",
+    "lastName": "Chukwu",
+    "email": "chukwuprincec@gmail.com",
+    "favoriteColor": "black",
+    "birthday": "20/08/2023"
+}
+
+### Delete contact
+DELETE http://localhost:{{PORT}}/contacts/644b6d0b6a244e684449f1b8
 
 
 //Production URLs
-# https://cprinceccse341.onrender.com/
-# https://cprinceccse341.onrender.com/contacts
-# https://cprinceccse341.onrender.com/contacts/644402cbf75c6f2b4c479a4b
+### Display Name 
+GET https://cprinceccse341.onrender.com/
+
+
+### Display contacts 
+GET https://cprinceccse341.onrender.com/contacts
+
+### Display single contact 
+GET https://cprinceccse341.onrender.com/contacts/644402cbf75c6f2b4c479a4b
 # https://cprinceccse341.onrender.com/contacts/644402cbf75c6f2b4c479a4c
 # https://cprinceccse341.onrender.com/contacts/644402cbf75c6f2b4c479a4d
+
+
+### Display cpntacts 
+POST https://cprinceccse341.onrender.com/contacts
+Content-Type: application/json
+
+{
+    "firstName": "Chukwu",
+    "lastName": "Chukwu",
+    "email": "chukwuprincec@gmail.com",
+    "favoriteColor": "black",
+    "birthday": "20/08/2023"
+}
+
+### Update contact
+PUT https://cprinceccse341.onrender.com/contacts/644b6d0b6a244e684449f1b8
+Content-Type: application/json
+
+{
+    "firstName": "Prince",
+    "lastName": "Chukwu",
+    "email": "chukwuprincec@gmail.com",
+    "favoriteColor": "black",
+    "birthday": "20/08/2023"
+}
+
+
+### Delete contact
+DELETE https://cprinceccse341.onrender.com/contacts/644b6d0b6a244e684449f1b8
