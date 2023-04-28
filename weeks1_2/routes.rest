@@ -55,13 +55,13 @@ GET https://cprinceccse341.onrender.com/contacts/644402cbf75c6f2b4c479a4b
 # https://cprinceccse341.onrender.com/contacts/644402cbf75c6f2b4c479a4d
 
 
-### Display cpntacts 
+### Create contact 
 POST https://cprinceccse341.onrender.com/contacts
 Content-Type: application/json
 
 {
-    "firstName": "Chukwu",
-    "lastName": "Chukwu",
+    "firstName": "Uche",
+    "lastName": "Nwosu",
     "email": "chukwuprincec@gmail.com",
     "favoriteColor": "black",
     "birthday": "20/08/2023"
