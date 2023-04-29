@@ -1,16 +1,18 @@
 @PORT = {{$dotenv PORT}}
 
 ### Development URLs
- http://localhost:3000
+http://localhost:{{PORT}}
+
+### Get documentation
+http://localhost:{{PORT}}/api-docs
 
 ### Get contacts
- http://localhost:{{PORT}}/contacts
+http://localhost:{{PORT}}/contacts
 
 ### Get Single contact
 http://localhost:{{PORT}}/contacts/644402cbf75c6f2b4c479a4b
 # http://localhost:{{PORT}}/contacts/644402cbf75c6f2b4c479a4c
 # http://localhost:{{PORT}}/contacts/644402cbf75c6f2b4c479a4d
-
 
 ### Create contact
 POST http://localhost:{{PORT}}/contacts
@@ -45,6 +47,8 @@ DELETE http://localhost:{{PORT}}/contacts/644b6d0b6a244e684449f1b8
 ### Display Name 
 GET https://cprinceccse341.onrender.com/
 
+### Display Documentation 
+GET https://cprinceccse341.onrender.com/api-docs
 
 ### Display contacts 
 GET https://cprinceccse341.onrender.com/contacts
