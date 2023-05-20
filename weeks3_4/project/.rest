@@ -24,3 +24,7 @@ Content-Type: application/json
     "password": "password",
     "phoneNumber": "08135061764"
 }
+
+
+### Get all availble shops
+GET https://cprinceccse341.onrender.com/shops HTTP/1.1
