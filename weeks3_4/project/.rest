@@ -1,0 +1,26 @@
+### Get all availble shops
+GET http://localhost:8000/shops HTTP/1.1
+
+### Get all products in a shop
+GET http://localhost:8000/shops/6468289a3407ec9bc8ada83a/products HTTP/1.1
+
+### Get all product categories in a shop
+GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/categories HTTP/1.1
+
+### Get a product's details from a shop
+GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/products/61ab42600f34753bcedfa78b HTTP/1.1
+
+### Get a product's details from a shop
+GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/products/61ab42600f34753bcedfa78b HTTP/1.1
+
+### Create account
+POST http://localhost:8000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Ebuka",
+    "lastName": "Chukwu",
+    "email": "chukwuprincec@gmail.com",
+    "password": "password",
+    "phoneNumber": "08135061764"
+}
