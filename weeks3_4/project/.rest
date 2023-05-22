@@ -26,5 +26,11 @@ Content-Type: application/json
 }
 
 
+### Get all users
+GET http://localhost:8000/users HTTP/1.1
+
+### Get a user
+GET http://localhost:8000/users/646ae2ef7729a2a0de3b036f HTTP/1.1
+
 ### Get all availble shops
 GET https://centeralmall.onrender.com/shops/6468289a3407ec9bc8ada83a/products HTTP/1.1

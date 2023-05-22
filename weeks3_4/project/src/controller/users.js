@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 const connection = require('../db/connect');
 
 
@@ -28,11 +28,13 @@ async function getUsers(req, res) {
 
 async function getUserById(req, res) {
     let col = returnCollection("ecommerce", "users");
-    let user = await col.find({_id: new ObjectId(req.params.UserId)});
+    
+    let user = await col.find({_id: new ObjectId(req.params.userId)});
     user.toArray()
-    .then(UserList => {
+    .then(userList => {
+        console.log(userList)
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(UserList);
+        res.status(200).json(userList);
     })
 }
 
