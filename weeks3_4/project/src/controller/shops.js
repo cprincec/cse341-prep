@@ -47,13 +47,20 @@ async function getProducts(req, res) {
 async function getCategories(req, res) {
   let col = returnCollection();
   let id = new ObjectId(req.params.shopId);
-  let shop = await col.findOne(
-    { _id: id },
-    { projection: { _id: 0, url: 1, name: 1 } }
-  );
-  let categories = await fetch(`${shop.url}/categories`).then((category) =>
-    category.json()
-  );
+  let shop = await col.findOne({ _id: id });
+  console.log(`${shop.url}/categories`);
+  let categories;
+  if (shop.name == "Fake Store") {
+    categories = await fetch(`${shop.url}/products/categories`).then(
+      (category) => category.json()
+    );
+  } else {
+    categories = await fetch(`${shop.url}/categories`).then((category) =>
+      category.json()
+    );
+  }
+
+  console.log(categories);
 
   if (shop.name == "Storest") {
     res.status(200).send(categories.data);
