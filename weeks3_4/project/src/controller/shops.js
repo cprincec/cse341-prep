@@ -34,9 +34,10 @@ async function getProducts(req, res) {
   //   );
   // } else {
     console.log(`Fetchinng products from ${shop.url}/products`);
-    let products = await fetch(`${shop.url}/products`).then((product) =>
-      product.json()
-    );
+    let products = await fetch(`${shop.url}/products`)
+    .then((product) => product.json())
+    .catch(err => console.log(err, err.message));
+    
   // }
   res.setHeader('Content-Type', 'application/json');
   if (shop.name == "Storest") {
