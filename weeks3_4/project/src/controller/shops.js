@@ -12,9 +12,6 @@ async function getShops(req, res) {
   result.toArray().then((resultList) => {
     res.status(200).json(resultList);
   });
-  console.log(
-    `Here are the shops ${result}. Here the data type ${typeof result}`
-  );
 }
 
 async function getProducts(req, res) {
@@ -26,20 +23,20 @@ async function getProducts(req, res) {
 
   // if (req.query.title) {
   //   console.log("Searching by title")
-    
+
   //   let productTitle = req.query.title;
   //   console.log(`${shop.url}/products/?title="${productTitle}"`);
   //   products = await fetch(`${shop.url}/products/?title="${productTitle}"`).then(
   //     (product) => product.json()
   //   );
   // } else {
-    console.log(`Fetchinng products from ${shop.url}/products`);
-    let products = await fetch(`${shop.url}/products`)
+
+  let products = await fetch(`${shop.url}/products`)
     .then((product) => product.json())
-    .catch(err => console.log(err, err.message));
-    
+    .catch((err) => console.log(err, err.message));
+
   // }
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader("Content-Type", "application/json");
   if (shop.name == "Storest") {
     res.status(200).send(products.data);
   } else {
@@ -50,19 +47,27 @@ async function getProducts(req, res) {
 async function getCategories(req, res) {
   let col = returnCollection();
   let id = new ObjectId(req.params.shopId);
-  let shop = await col.findOne({ _id: id }, { projection: { url: 1 } });
+  let shop = await col.findOne(
+    { _id: id },
+    { projection: { _id: 0, url: 1, name: 1 } }
+  );
   let categories = await fetch(`${shop.url}/categories`).then((category) =>
     category.json()
   );
-  res.status(200).send(categories);
+
+  if (shop.name == "Storest") {
+    res.status(200).send(categories.data);
+  } else {
+    res.status(200).send(categories);
+  }
 }
 
 async function getProduct(req, res) {
   let col = returnCollection();
-  let id = new ObjectId(req.params.id);
+  let id = new ObjectId(req.params.shopId);
   let shop = await col.findOne({ _id: id });
   let product;
-  console.log(shop.name);
+
   if (shop.name == "Storest") {
     // Get all products
     let products = await fetch(`${shop.url}/products`).then((product) =>
@@ -73,8 +78,8 @@ async function getProduct(req, res) {
     let item = products.data.find(
       (product) => product._id == req.params.productId
     );
+    // Replace spaces between words with an hyphen
     let productName = item.title.replace(/ /g, "-");
-    console.log(productName);
 
     // retrieve all information for that product
     product = await fetch(`${shop.url}/products/${productName}`).then(
@@ -85,6 +90,7 @@ async function getProduct(req, res) {
       (product) => product.json()
     );
   }
+  res.setHeader("Content-Type", "application/json");
   res.status(200).send(product);
 }
 
