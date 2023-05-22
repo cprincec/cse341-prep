@@ -19,7 +19,7 @@ async function getShops(req, res) {
 
 async function getProducts(req, res) {
   let col = returnCollection();
-  let id = new ObjectId(req.params.id);
+  let id = new ObjectId(req.params.shopId);
   let shop = await col.findOne({ _id: id });
   // let products;
   // console.log(req.query.title);
@@ -33,11 +33,12 @@ async function getProducts(req, res) {
   //     (product) => product.json()
   //   );
   // } else {
+    console.log(`Fetchinng products from ${shop.url}/products`);
     let products = await fetch(`${shop.url}/products`).then((product) =>
       product.json()
     );
   // }
-
+  res.setHeader('Content-Type', 'application/json');
   if (shop.name == "Storest") {
     res.status(200).send(products.data);
   } else {
@@ -47,7 +48,7 @@ async function getProducts(req, res) {
 
 async function getCategories(req, res) {
   let col = returnCollection();
-  let id = new ObjectId(req.params.id);
+  let id = new ObjectId(req.params.shopId);
   let shop = await col.findOne({ _id: id }, { projection: { url: 1 } });
   let categories = await fetch(`${shop.url}/categories`).then((category) =>
     category.json()
