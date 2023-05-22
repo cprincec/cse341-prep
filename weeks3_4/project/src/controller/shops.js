@@ -48,7 +48,7 @@ async function getCategories(req, res) {
   let col = returnCollection();
   let id = new ObjectId(req.params.shopId);
   let shop = await col.findOne({ _id: id });
-  console.log(`${shop.url}/categories`);
+  
   let categories;
   if (shop.name == "Fake Store") {
     categories = await fetch(`${shop.url}/products/categories`).then(
@@ -59,8 +59,6 @@ async function getCategories(req, res) {
       category.json()
     );
   }
-
-  console.log(categories);
 
   if (shop.name == "Storest") {
     res.status(200).send(categories.data);
