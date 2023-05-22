@@ -15,7 +15,6 @@ async function main() {
     try {
         // connect to database
         await client.connect();
-        await listDatabases(client)
 
         // store database connection in _db variable
         _db = client;

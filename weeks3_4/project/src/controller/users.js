@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const connection = require('../db/connect');
 
 
@@ -19,10 +20,25 @@ async function createUser(req, res) {
     }
 }
 
+async function getUsers(req, res) {
+    let col = returnCollection("ecommerce", "users");
+    await col.find({}).toArray()
+    .then(usersList =>  res.status(200).json(usersList));
+}
+
+async function getUserById(req, res) {
+    let col = returnCollection("ecommerce", "users");
+    let user = await col.find({_id: new ObjectId(req.params.UserId)});
+    user.toArray()
+    .then(UserList => {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(UserList);
+    })
+}
 
 function returnCollection(dbname = "ecommerce", collection = "shops") {
     return connection.getDb().db(dbname).collection(collection);
 }
 
 
-module.exports = { createUser }
+module.exports = { createUser, getUsers, getUserById }

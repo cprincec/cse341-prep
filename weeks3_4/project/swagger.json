@@ -22,12 +22,15 @@
         }
       }
     },
-    "/shops/{id}/products": {
+    "/shops/{shopId}/products": {
       "get": {
         "description": "",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "id",
+            "name": "shopId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -40,12 +43,12 @@
         }
       }
     },
-    "/shops/{id}/categories": {
+    "/shops/{shopId}/categories": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "id",
+            "name": "shopId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -58,12 +61,15 @@
         }
       }
     },
-    "/shops/{id}/products/{productId}": {
+    "/shops/{shopId}/products/{productId}": {
       "get": {
         "description": "",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "id",
+            "name": "shopId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -83,6 +89,15 @@
       }
     },
     "/users/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "post": {
         "description": "",
         "parameters": [
@@ -117,6 +132,27 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
