@@ -36,7 +36,7 @@ async function getUserById(req, res, next) {
   try {
     let user = await col.findOne({ _id: userId });
     if (!user) {
-      throw createError(404, "User does not exist.");
+      throw createError(400, "User does not exist.");
     }
     res.setHeader("Content-Type", "application/json");
     res.status(200).json(user);
@@ -76,9 +76,8 @@ async function deleteUser(req, res, next) {
   try {
     let col = returnCollection("ecommerce", "users");
     let result = await col.deleteOne({ _id: userId });
-    console.log(result)
-    if (!result) {
-      throw new Error("404", "Invalid user id");
+    if (!result.deletedCount) {
+      throw createError(400, "User not found");
     }
     if (result.deletedCount) {
       res.status(200).send();

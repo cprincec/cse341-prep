@@ -32,7 +32,7 @@ GET http://localhost:8000/users HTTP/1.1
 GET http://localhost:8000/users/646ad1e04dd77bfdc45f9bbb HTTP/1.1
 
 ### update user info
-PUT http://localhost:8000/users/646cfec9477f85fec253944e HTTP/1.1
+PUT http://localhost:8000/users/636cfec9477f85fec253944e HTTP/1.1
 Content-Type: application/json
 
 {
@@ -44,7 +44,7 @@ Content-Type: application/json
 }
 
 ### Delete a user
-DELETE http://localhost:8000/users/646b91a41f0fe7b98da6a703 HTTP/1.1
+DELETE http://localhost:8000/users/646cf8cbd8150c810500adf1 HTTP/1.1
 
 
 ### PRODCTION ENDPOINTS

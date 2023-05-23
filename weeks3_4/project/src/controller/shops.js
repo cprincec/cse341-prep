@@ -70,7 +70,7 @@ async function getProduct(req, res, next) {
       );
 
       if (!product) {
-        throw createError(404, "Product does not exist in database.");
+        throw createError(400, "Product does not exist in database.");
       }
       res.setHeader("Content-Type", "application/json");
       res.status(200).send(product);
@@ -78,7 +78,7 @@ async function getProduct(req, res, next) {
       let product = products.find((item) => item.id == req.params.productId);
 
       if (!product) {
-        throw createError(404, "Product does not exist in database.");
+        throw createError(400, "Product does not exist in database.");
       }
       res.setHeader("Content-Type", "application/json");
       res.status(200).send(product);

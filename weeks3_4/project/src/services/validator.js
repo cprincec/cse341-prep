@@ -1,6 +1,7 @@
 const { checkSchema, validationResult } = require("express-validator");
 const users = require("../controller/users");
 const { ObjectId } = require("mongodb");
+const createError = require('http-errors');
 
 const SignupSchema = {
   firstName: {
@@ -37,12 +38,12 @@ const UpdateUserInfoSchema = {
     trim: true,
     notEmpty: {
       bail: true,
-      errorMessage: "Provide a user id"
+      errorMessage: "Provide a user id",
     },
     errorMessage: "Invalid userId",
     custom: {
-      options: checkExistingUserById
-    }
+      options: checkExistingUserById,
+    },
   },
   firstName: {
     trim: true,
@@ -57,7 +58,7 @@ const UpdateUserInfoSchema = {
   email: {
     trim: true,
     isEmail: true,
-    errorMessage: "Please enter a vaild email"
+    errorMessage: "Please enter a vaild email",
   },
 
   password: {
@@ -75,15 +76,16 @@ const UpdateUserInfoSchema = {
   },
 };
 
-
-
-
 function validateSchema(req, res, next) {
-  const result = validationResult(req);
-  if (result.isEmpty()) {
-    return next();
+  try {
+    const result = validationResult(req);
+    if (result.isEmpty()) {
+      return next();
+    }
+    res.status(400).json(result.array());
+  } catch (error) {
+    console.log(error)
   }
-  res.send({ errors: result.array() });
 }
 
 async function checkExistingUserByEmail(value) {
@@ -102,6 +104,5 @@ async function checkExistingUserById(id) {
     throw new Error("Invalid user id or User does not exist");
   }
 }
-
 
 module.exports = { SignupSchema, UpdateUserInfoSchema, validateSchema };
