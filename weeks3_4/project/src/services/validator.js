@@ -33,7 +33,7 @@ const SignupSchema = {
 };
 
 const UpdateUserInfoSchema = {
-  id: {
+  userId: {
     trim: true,
     notEmpty: {
       bail: true,

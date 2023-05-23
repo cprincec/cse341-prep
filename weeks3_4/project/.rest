@@ -18,11 +18,11 @@ POST http://localhost:8000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstName": "Prince",
-    "lastName": "Chukwu",
-    "email": "chukwuprincec@gmail.com",
-    "password": "password is",
-    "phoneNumber": "0813501764"
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johnDoe@gmail.com",
+  "password": "johshdkhk",
+  "phoneNumber": "081"
 }
 
 ### Get all users
@@ -32,11 +32,10 @@ GET http://localhost:8000/users HTTP/1.1
 GET http://localhost:8000/users/646ad1e04dd77bfdc45f9bbb HTTP/1.1
 
 ### update user info
-PUT http://localhost:8000/users/646ae2ef7729a2a0de3b036f HTTP/1.1
+PUT http://localhost:8000/users/646cfec9477f85fec253944e HTTP/1.1
 Content-Type: application/json
 
 {
- "id": "646ae2ef7729a2a0de3b036f",
   "firstName": "John",
   "lastName": "Doe",
   "email": "johnDoe@gmail.com",
@@ -86,7 +85,6 @@ PUT https://centeralmall.onrender.com/users/646ae2ef7729a2a0de3b036f HTTP/1.1
 Content-Type: application/json
 
 {
- "id": "646ae2ef7729a2a0de3b036f",
   "firstName": "John",
   "lastName": "Doe",
   "email": "johnDoe@gmail.com",
