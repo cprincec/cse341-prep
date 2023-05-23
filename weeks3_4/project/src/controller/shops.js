@@ -1,36 +1,21 @@
 const connection = require("../db/connect");
 const ObjectId = require("mongodb").ObjectId;
-// async function getProducts(req, res) {
-//     let collection = returnCollection();
+const createError = require("http-errors");
 
-// }
 
 async function getShops(req, res) {
   let col = returnCollection();
-  console.log(col);
   let result = await col.find();
   result.toArray().then((resultList) => {
     res.status(200).json(resultList);
   });
 }
 
-async function getProducts(req, res) {
+async function getProducts(req, res, next) {
   let col = returnCollection();
+
   let id = new ObjectId(req.params.shopId);
   let shop = await col.findOne({ _id: id });
-  // let products;
-  // console.log(req.query.title);
-
-  // if (req.query.title) {
-  //   console.log("Searching by title")
-
-  //   let productTitle = req.query.title;
-  //   console.log(`${shop.url}/products/?title="${productTitle}"`);
-  //   products = await fetch(`${shop.url}/products/?title="${productTitle}"`).then(
-  //     (product) => product.json()
-  //   );
-  // } else {
-
   let products = await fetch(`${shop.url}/products`)
     .then((product) => product.json())
     .catch((err) => console.log(err, err.message));
@@ -48,7 +33,7 @@ async function getCategories(req, res) {
   let col = returnCollection();
   let id = new ObjectId(req.params.shopId);
   let shop = await col.findOne({ _id: id });
-  
+
   let categories;
   if (shop.name == "Fake Store") {
     categories = await fetch(`${shop.url}/products/categories`).then(
@@ -67,36 +52,40 @@ async function getCategories(req, res) {
   }
 }
 
-async function getProduct(req, res) {
+async function getProduct(req, res, next) {
   let col = returnCollection();
   let id = new ObjectId(req.params.shopId);
   let shop = await col.findOne({ _id: id });
-  let product;
 
-  if (shop.name == "Storest") {
+  try {
     // Get all products
     let products = await fetch(`${shop.url}/products`).then((product) =>
       product.json()
     );
 
-    // find the product name of product matching id in request parameter
-    let item = products.data.find(
-      (product) => product._id == req.params.productId
-    );
-    // Replace spaces between words with an hyphen
-    let productName = item.title.replace(/ /g, "-");
+    if (shop.name == "Storest") {
+      // find the product name of product matching id in request parameter
+      let product = products.data.find(
+        (item) => item._id == req.params.productId
+      );
 
-    // retrieve all information for that product
-    product = await fetch(`${shop.url}/products/${productName}`).then(
-      (product) => product.json()
-    );
-  } else {
-    product = await fetch(`${shop.url}/products/${req.params.productId}`).then(
-      (product) => product.json()
-    );
+      if (!product) {
+        throw createError(404, "Product does not exist in database.");
+      }
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).send(product);
+    } else {
+      let product = products.find((item) => item.id == req.params.productId);
+
+      if (!product) {
+        throw createError(404, "Product does not exist in database.");
+      }
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).send(product);
+    }
+  } catch (error) {
+    next(error);
   }
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).send(product);
 }
 
 function returnCollection(dbname = "ecommerce", collection = "shops") {

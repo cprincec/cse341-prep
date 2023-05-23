@@ -1,8 +1,23 @@
-const router = require("express").Router();
+const usersRouter = require("express").Router();
+const { checkSchema } = require("express-validator");
+const validator = require("../services/validator");
 const controller = require("../controller/users");
 
-router.route("/").get(controller.getUsers).post(controller.createUser);
+usersRouter
+  .route("/")
+  .get(controller.getUsers)
+  .post(
+    checkSchema(validator.SignupSchema),
+    validator.validateSchema,
+    controller.createUser
+  )
 
-router.route("/:userId").get(controller.getUserById);
+usersRouter.route("/:userId")
+  .get(controller.getUserById)
+  .put(
+    checkSchema(validator.UpdateUserInfoSchema),
+    validator.validateSchema,
+    controller.updateUser)
+  .delete(controller.deleteUser)
 
-module.exports = router;
+module.exports = usersRouter;

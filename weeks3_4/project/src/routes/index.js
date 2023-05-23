@@ -1,8 +1,8 @@
-const router = require("express").Router();
+const rootRouter = require("express").Router();
 
-router
+rootRouter
   .use("/shops", require("./shops"))
   .use("/users", require("./users"))
   .use("/api-docs", require("./swagger"));
 
-module.exports = router;
+module.exports = rootRouter;
