@@ -1,22 +1,18 @@
 const usersRouter = require("express").Router();
-const { checkSchema } = require("express-validator");
-const validator = require("../services/validator");
+const { ensureAuth, ensureGuest } = require("../middlewares/auth");
 const controller = require("../controller/users");
 
 usersRouter
   .route("/")
-  .get(controller.getUsers)
-  .post(
-    checkSchema(validator.SignupSchema),
-    validator.validateSchema,
-    controller.createUser
-  )
+  .get(ensureAuth, controller.getUsers)
+  .post(controller.createUser)
 
 usersRouter.route("/:userId")
-  .get(controller.getUserById)
+  .get(ensureAuth, controller.getUserById)
   .put(
-    checkSchema(validator.UpdateUserInfoSchema),
-    validator.validateSchema,
+    // checkSchema(validator.UpdateUserInfoSchema),
+    // validator.validateSchema,
+    ensureAuth,
     controller.updateUser)
   .delete(controller.deleteUser)
 

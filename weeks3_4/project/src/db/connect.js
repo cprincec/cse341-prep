@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 // variable to store database connection
@@ -9,15 +10,15 @@ async function main() {
     // database connection string
     const uri = process.env.URI;
 
-    // create instance of mongoclient wi
-    let client = new MongoClient(uri);
+    // // create instance of mongoclient wi
+    // let client = new MongoClient(uri);
 
     try {
         // connect to database
-        await client.connect();
+        let connection = await mongoose.connect(uri)
 
         // store database connection in _db variable
-        _db = client;
+        _db = connection;
 
     } catch (e) {
         console.error(e);

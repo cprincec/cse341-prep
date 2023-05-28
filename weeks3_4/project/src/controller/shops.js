@@ -1,14 +1,17 @@
-const connection = require("../db/connect");
+const Shop = require("../model/Shop");
 const ObjectId = require("mongodb").ObjectId;
 const createError = require("http-errors");
 
-
-async function getShops(req, res) {
-  let col = returnCollection();
-  let result = await col.find();
-  result.toArray().then((resultList) => {
-    res.status(200).json(resultList);
-  });
+async function getShops(req, res, next) {
+  try {
+    let shops = await Shop.find({});
+    if (!shops) {
+      throw createError(400, "No shop found in database");
+    }
+    res.status(200).json(shops);
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function getProducts(req, res, next) {
@@ -20,7 +23,7 @@ async function getProducts(req, res, next) {
     .then((product) => product.json())
     .catch((err) => console.log(err, err.message));
 
-  // }
+  
   res.setHeader("Content-Type", "application/json");
   if (shop.name == "Storest") {
     res.status(200).send(products.data);

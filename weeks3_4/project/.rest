@@ -13,23 +13,34 @@ GET http://localhost:8000/shops/6468283d3407ec9bc8ada836/categories HTTP/1.1
 GET http://localhost:8000/shops/6468289a3407ec9bc8ada83a/products/3 HTTP/1.1
 
 
-### Create account
+### Create account with form
 POST http://localhost:8000/users HTTP/1.1
 Content-Type: application/json
 
 {
-  "firstName": "John",
+  "oAuth": "0",
+  "firstName": "ebuka",
   "lastName": "Doe",
-  "email": "johnDoe@gmail.com",
-  "password": "johshdkhk",
-  "phoneNumber": "081"
+  "email": "gp@gmail.com",
+  "password": "chukwuprince",
+  "phoneNumber": "08139"
 }
+
+### login
+POST http://localhost:8000/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "chukwuprincec@gmail.com",
+  "password": ""
+}
+
 
 ### Get all users
 GET http://localhost:8000/users HTTP/1.1
 
 ### Get a user
-GET http://localhost:8000/users/646ad1e04dd77bfdc45f9bbb HTTP/1.1
+GET http://localhost:8000/users/647252167debe3060ef9968e HTTP/1.1
 
 ### update user info
 PUT http://localhost:8000/users/636cfec9477f85fec253944e HTTP/1.1
@@ -44,8 +55,10 @@ Content-Type: application/json
 }
 
 ### Delete a user
-DELETE http://localhost:8000/users/646cf8cbd8150c810500adf1 HTTP/1.1
+DELETE http://localhost:8000/users/646f19f53049f43e824b7fe4 HTTP/1.1
 
+### auth a user
+GET http://localhost:8000/auth/google HTTP/1.1
 
 ### PRODCTION ENDPOINTS
 
