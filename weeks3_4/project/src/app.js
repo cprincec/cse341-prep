@@ -21,7 +21,7 @@ app
 
   // Sessions
   .use(session({
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     // don't save a session until something is saved
     saveUninitialized: true,
