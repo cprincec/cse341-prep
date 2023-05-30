@@ -5,7 +5,7 @@ const createError = require("http-errors");
 async function getShops(req, res, next) {
   try {
     console.log("Getting Shops")
-    let shops = await Shops.find({});
+    let shops = await Shops.find();
     console.log("Shops: ", shops)
     if (!shops) {
       throw createError(400, "No Shops found in database");
