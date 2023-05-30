@@ -1,7 +1,7 @@
 ### DEVELOPMENT URLS
 
 ### Get all availble shops
-GET http://localhost:8000/shops HTTP/1.1
+GET http://localhost:8000/shops
 
 ### Get all products in a shop
 GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/products HTTP/1.1

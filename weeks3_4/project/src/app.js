@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const cookieParser = require('cookie-parser')
 require("dotenv").config();
 require('./config/passport')(passport);
 
@@ -25,15 +24,13 @@ app
     resave: false,
     // don't save a session until something is saved
     saveUninitialized: true,
-    // cookie: { secure: true },
+    cookie: { secure: false, httpOnly: false, maxAge: 1000 * 24 * 60 },
     store: MongoStore.create({mongoUrl: process.env.URI})
   }))
 
   // Passport middleware
   .use(passport.initialize())
   .use(passport.session())
-  
-  .use(cookieParser())
 
 
   .use("/", require("./routes/index"))
