@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const mongodb = require("./db/connect");
 const bodyParser = require("body-parser");
-const passport = require('passport');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const passport = require("passport");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 require("dotenv").config();
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 const PORT = process.env.PORT || 3000;
 
 app
@@ -18,19 +18,20 @@ app
   })
 
   // Sessions
-  .use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    // don't save a session until something is saved
-    saveUninitialized: false,
-    cookie: { secure: false, httpOnly: false, maxAge: 1000 * 24 * 60 },
-    store: MongoStore.create({mongoUrl: process.env.URI})
-  }))
+  .use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      // don't save a session until something is saved
+      saveUninitialized: false,
+      cookie: { secure: false, httpOnly: false, maxAge: 1000 * 24 * 60 },
+      store: MongoStore.create({ mongoUrl: process.env.URI }),
+    })
+  )
 
   // Passport middleware
   .use(passport.initialize())
   .use(passport.session())
-
 
   .use("/", require("./routes/index"))
   .use((error, req, res, next) => {

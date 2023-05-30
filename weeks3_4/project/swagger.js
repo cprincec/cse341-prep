@@ -2,7 +2,7 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
     info: {
-        title: "Contacts Api",
+        title: "Ecommerce Api",
         description: 'Description'
     }, 
     host: 'centeralmall.onrender.com',

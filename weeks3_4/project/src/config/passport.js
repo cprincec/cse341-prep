@@ -57,10 +57,9 @@ module.exports = function (passport) {
       },
       async (email, password, done) => {
         try {
-          
           // Find the user by their email
           const user = await User.findOne({ email });
-        
+
           // If user is not found, return error
           if (!user) {
             return done(null, false, {
@@ -70,10 +69,10 @@ module.exports = function (passport) {
 
           // Compare the provided password with the hashed password stored in the database
           const isMatch = await bcrypt.compare(password, user.password);
-          
+
           // If passwords don't match, return error
           if (!isMatch) {
-            console.log('Inside !isMatch');
+            console.log("Inside !isMatch");
             return done(null, false, {
               message: "Incorrect email or password",
             });
@@ -89,18 +88,16 @@ module.exports = function (passport) {
   );
 
   passport.serializeUser((user, done) => {
-    process.nextTick(function() {
+    process.nextTick(function () {
       done(null, user._id);
-    })
-    
+    });
   });
 
   passport.deserializeUser((user, done) => {
-    console.log(user)
+    console.log(user);
     User.findOne({ _id: user }).then((user) => {
-      console.log(user)  
+      console.log(user);
       return done(null, user);
     });
-    
   });
 };

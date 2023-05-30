@@ -38,34 +38,16 @@
         }
       }
     },
-    "/auth/google": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/auth/google/callback": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/auth/logout": {
       "get": {
-        "description": "",
+        "description": "Logout the logging in user. This will prevent access to protected routes",
         "parameters": [],
         "responses": {}
       }
     },
     "/shops/": {
       "get": {
-        "description": "",
+        "description": "Fetch all available shops",
         "parameters": [],
         "responses": {
           "200": {
@@ -76,14 +58,15 @@
     },
     "/shops/{shopId}/products": {
       "get": {
-        "description": "",
+        "description": "Get all products in a specific shop",
         "produces": ["application/json"],
         "parameters": [
           {
             "name": "shopId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id of the shop whose products to be fetched"
           }
         ],
         "responses": {
@@ -95,7 +78,7 @@
     },
     "/shops/{shopId}/categories": {
       "get": {
-        "description": "",
+        "description": "Get list of product categories available in a shop",
         "produces": ["application/json"],
         "parameters": [
           {
@@ -114,20 +97,22 @@
     },
     "/shops/{shopId}/products/{productId}": {
       "get": {
-        "description": "",
+        "description": "Get details of a specific product in a shop",
         "produces": ["application/json"],
         "parameters": [
           {
             "name": "shopId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id of the shop"
           },
           {
             "name": "productId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id of the product"
           }
         ],
         "responses": {
@@ -139,7 +124,7 @@
     },
     "/users/": {
       "get": {
-        "description": "",
+        "description": "See all registered users. (THIS IS A PROTECTED ROUTE)",
         "parameters": [],
         "responses": {
           "200": {
@@ -157,9 +142,6 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
-                },
-                "oAuth": {
                   "example": "any"
                 },
                 "firstName": {
@@ -187,7 +169,7 @@
     },
     "/users/{userId}": {
       "get": {
-        "description": "",
+        "description": "See details of logged in user. (THIS IS A PROTECTED ROUTE)",
         "parameters": [
           {
             "name": "userId",
@@ -203,7 +185,7 @@
         }
       },
       "put": {
-        "description": "",
+        "description": "Update logged in user details (PROTECTED ROUTE)",
         "parameters": [
           {
             "name": "userId",
@@ -246,7 +228,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a logged in user account (PROTECTED ROUTE)",
         "parameters": [
           {
             "name": "userId",
@@ -271,3 +253,10 @@
     }
   }
 }
+
+
+
+
+
+
+
