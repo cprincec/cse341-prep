@@ -7,7 +7,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 require("dotenv").config();
 require('./config/passport')(passport);
-
 const PORT = process.env.PORT || 3000;
 
 app
@@ -23,7 +22,7 @@ app
     secret: process.env.SESSION_SECRET,
     resave: false,
     // don't save a session until something is saved
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { secure: false, httpOnly: false, maxAge: 1000 * 24 * 60 },
     store: MongoStore.create({mongoUrl: process.env.URI})
   }))

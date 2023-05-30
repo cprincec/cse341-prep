@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const createError = require("http-errors");
 
 const ShopSchema = new mongoose.Schema({
   name: {
@@ -17,6 +16,6 @@ const ShopSchema = new mongoose.Schema({
   },
 });
 
-const Shop = mongoose.model("Shop", ShopSchema, "shops");
+const Shop = mongoose.model("Shop", ShopSchema);
 
 module.exports = Shop;

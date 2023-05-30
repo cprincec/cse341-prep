@@ -1,4 +1,3 @@
-const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -20,16 +19,7 @@ async function main() {
     // store database connection in _db variable
     _db = connection;
 
-    const db = mongoose.connection;
-
-    db.on("error", (error) => {
-      console.error("MongoDB connection error:", error);
-    });
-
-    db.once("open", () => {
-      console.log("MongoDB connected successfully");
-    });
-  } catch (e) {
+    } catch (e) {
     console.error(e);
   }
 }
