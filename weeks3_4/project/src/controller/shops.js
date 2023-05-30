@@ -1,14 +1,14 @@
-const Shops = require("../model/Shop");
+const Shop = require("../model/Shop");
 const ObjectId = require("mongodb").ObjectId;
 const createError = require("http-errors");
 
 async function getShops(req, res, next) {
   try {
-    console.log("Getting Shops")
-    let shops = await Shops.find();
+    console.log("Getting shops")
+    let shops = await Shop.find({});
     console.log("Shops: ", shops)
     if (!shops) {
-      throw createError(400, "No Shops found in database");
+      throw createError(400, "No shop found in database");
     }
     res.status(200).json(shops);
   } catch (error) {
@@ -17,15 +17,15 @@ async function getShops(req, res, next) {
 }
 
 async function getProducts(req, res, next) {
-  let id = new ObjectId(req.params.ShopsId);
-  let shops = await Shops.findOne({ _id: id });
-  console.log(shops);
-  let products = await fetch(`${shops.url}/products`)
+  let id = new ObjectId(req.params.shopId);
+  let shop = await Shop.findOne({ _id: id });
+  console.log(shop);
+  let products = await fetch(`${shop.url}/products`)
     .then((product) => product.json())
     .catch((err) => console.log(err, err.message));
 
   res.setHeader("Content-Type", "application/json");
-  if (Shops.name == "Storest") {
+  if (shop.name == "Storest") {
     res.status(200).send(products.data);
   } else {
     res.status(200).send(products);
@@ -33,20 +33,20 @@ async function getProducts(req, res, next) {
 }
 
 async function getCategories(req, res) {
-  let id = new ObjectId(req.params.ShopsId);
-  let shops = await Shops.findOne({ _id: id });
+  let id = new ObjectId(req.params.shopId);
+  let shop = await Shop.findOne({ _id: id });
   let categories;
-  if (shops.name == "Fake Store") {
-    categories = await fetch(`${shops.url}/products/categories`).then(
+  if (shop.name == "Fake Store") {
+    categories = await fetch(`${shop.url}/products/categories`).then(
       (category) => category.json()
     );
   } else {
-    categories = await fetch(`${shops.url}/categories`).then((category) =>
+    categories = await fetch(`${shop.url}/categories`).then((category) =>
       category.json()
     );
   }
   res.setHeader("Content-Type", "application/json");
-  if (shops.name == "Storest") {
+  if (shop.name == "Storest") {
     res.status(200).send(categories.data);
   } else {
     res.status(200).send(categories);
@@ -54,19 +54,19 @@ async function getCategories(req, res) {
 }
 
 async function getProduct(req, res, next) {
-  let id = new ObjectId(req.params.ShopsId);
-  let shops = await Shops.findOne({ _id: id });
+  let id = new ObjectId(req.params.shopId);
+  let shop = await Shop.findOne({ _id: id });
 
   let product;
 
   try {
     // Get all products
-    let products = await fetch(`${shops.url}/products`).then((product) =>
+    let products = await fetch(`${shop.url}/products`).then((product) =>
       product.json()
     );
 
     // filter single product
-    if (shops.name == "Storest") {
+    if (shop.name == "Storest") {
       // find the product name of product matching id in request parameter
       product = products.data.find((item) => item._id == req.params.productId);
     } else {
