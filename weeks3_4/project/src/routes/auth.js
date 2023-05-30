@@ -6,7 +6,7 @@ authRouter
   .post(
     "/login",
     passport.authenticate('local'), (req, res) => {   
-      res.json(req.user)}   
+      res.status(200).json(req.user)}   
   )
   .get(
     "/google",
@@ -16,7 +16,7 @@ authRouter
     "/google/callback",
     passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
-      res.json(req.user);
+      res.status(200).json(req.user);
     }
   )
   .get("/logout", (req, res, next) => {
