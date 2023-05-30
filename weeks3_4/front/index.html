@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <input type="text" id="name">
+        <input type="text" id="pass">
+        <button type="submit">Login</button>
+    </form>
+    <script>
+        let name = document.querySelector("#name")
+        let pass = document.querySelector("#pass")
+        let btn = document.querySelector("button").addEventListener('click',
+            (e) => {
+                e.preventDefault();
+                fetch("http://localhost:8000/auth/login", {
+                    method: "post",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "email": name.value,
+                        "password": pass.value
+                    })
+                })
+            }).then(res => {
+                document.write(res)
+            })
+    </script>
+</body>
+
+</html>

@@ -4,6 +4,11 @@ const ObjectId = require("mongodb").ObjectId;
 
 async function createUser(req, res, next) {
   try {
+    let existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      throw createError(400, "User already exists");
+    }
+
     let user = {
       oAuth: req.body.oAuth,
       firstName: req.body.firstName,
@@ -48,7 +53,7 @@ async function getUsers(req, res) {
 
 async function getUserById(req, res, next) {
   let id;
-  console.log(req.user)
+
   try {
     id = new ObjectId(req.params.userId);
   } catch (error) {
@@ -59,70 +64,63 @@ async function getUserById(req, res, next) {
 
   // Check that the authenticated user is the person
   // trying to access this
-  let loggedInUserId = req.user[0]._id.toString();
+  let loggedInUserId = req.user._id.toString();
   if (loggedInUserId != id) {
-    console.log("redirecting")
-    res.redirect("http://localhost:8000/auth/logout")
+    res.redirect("http://localhost:8000/auth/logout");
     return;
   }
 
   try {
-    console.log("inside the next try")
     let user = await User.findOne({ _id: id });
     if (!user) {
       throw createError(400, "User does not exist");
     }
     res.status(200).json(user);
   } catch (error) {
-    console.log("Caught and error: ", error.message)
     next(error);
   }
 }
 
 async function updateUser(req, res, next) {
-  // try {
-  //   let col = returnCollection("ecommerce", "users");
-  //   let userId = new ObjectId(req.params.userId);
-  //   let user = {
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName,
-  //     email: req.body.email,
-  //     password: req.body.password,
-  //     phoneNumber: req.body.phoneNumber,
-  //   };
-  //   let result = await col.replaceOne({ _id: userId }, user);
-  //   if (result.acknowledged) {
-  //     res.status(201).json(result.insertedId);
-  //   } else {
-  //     res
-  //       .status(500)
-  //       .json(
-  //         result.error || "Some error occurred while updating user information"
-  //       );
-  //   }
-  // } catch (error) {
-  //   next(error);
-  // }
+  const userId = new ObjectId(req.params.userId);
+
+  try {
+    let userfound = await User.findOne({ _id: userId });
+    if (!userfound) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    userfound.firstName = req.body.firstName;
+    userfound.lastName = req.body.lastName;
+    userfound.email = req.body.email;
+    userfound.password = req.body.password;
+    userfound.phoneNumber = req.body.phoneNumber;
+
+    let result = await userfound.save();
+    if (result) {
+      res.status(200).json({ message: "User updated successfully" });
+    } else {
+      res
+        .status(404)
+        .json({ message: "There was a problem creating user. Try again" });
+    }
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function deleteUser(req, res, next) {
-  // let userId = new ObjectId(req.params.userId);
-  // try {
-  //   let col = returnCollection("ecommerce", "users");
-  //   let result = await col.deleteOne({ _id: userId });
-  //   if (!result.deletedCount) {
-  //     throw createError(400, "User not found");
-  //   }
-  //   if (result.deletedCount) {
-  //     res.status(200).send();
-  //   } else {
-  //     res
-  //       .status(500)
-  //       .json(result.error || "Some error occurred while deleting the user.");
-  //   }
-  // } catch (error) {
-  //   next(error);
-  // }
+  let userId = new ObjectId(req.params.userId);
+  try {
+    let result = await User.findByIdAndRemove({ _id: userId });
+    console.log(result);
+    if (!result) {
+      throw createError(400, "User not found");
+    }
+    res.status(200).json("Account deleted");
+  } catch (error) {
+    next(error);
+  }
 }
 
 // function returnCollection(dbname = "ecommerce", collection = "shops") {

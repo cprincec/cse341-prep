@@ -1,13 +1,12 @@
 const passport = require("passport");
+const { ensureGuest } = require("../middlewares/auth");
 const authRouter = require("express").Router();
 
 authRouter
   .post(
     "/login",
-    passport.authenticate("local", { failureRedirect: "/login" }),
-    function (req, res) {
-      res.json(req.user);
-    }
+    passport.authenticate('local'), (req, res) => {   
+      res.json(req.user)}   
   )
   .get(
     "/google",
@@ -18,7 +17,6 @@ authRouter
     passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
       res.json(req.user);
-      //res.redirect(`http://localhost:8000/users/${req.user}`);
     }
   )
   .get("/logout", (req, res, next) => {

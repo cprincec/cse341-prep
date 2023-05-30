@@ -4,13 +4,13 @@
 GET http://localhost:8000/shops HTTP/1.1
 
 ### Get all products in a shop
-GET http://localhost:8000/shops/6468289a3407ec9bc8ada83a/products HTTP/1.1
+GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/products HTTP/1.1
 
 ### Get all product categories in a shop
-GET http://localhost:8000/shops/6468283d3407ec9bc8ada836/categories HTTP/1.1
+GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/categories HTTP/1.1
 
 ### Get a product's details from a shop
-GET http://localhost:8000/shops/6468289a3407ec9bc8ada83a/products/3 HTTP/1.1
+GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/products/61ab42d00f34753bcedfa79e HTTP/1.1
 
 
 ### Create account with form
@@ -21,41 +21,45 @@ Content-Type: application/json
   "oAuth": "0",
   "firstName": "ebuka",
   "lastName": "Doe",
-  "email": "gp@gmail.com",
-  "password": "chukwuprince",
+  "email": "jooD@gmail.com",
+  "password": "crincehkhks",
   "phoneNumber": "08139"
 }
 
 ### login
-POST http://localhost:8000/auth/login HTTP/1.1
+POST http://localhost:8000/auth/login
 Content-Type: application/json
 
 {
-  "email": "chukwuprincec@gmail.com",
-  "password": ""
+  "email": "joD@gmail.com",
+  "password": "crincehkhks"
 }
+
+### logout
+GET http://localhost:8000/auth/logout
 
 
 ### Get all users
+
 GET http://localhost:8000/users HTTP/1.1
 
 ### Get a user
-GET http://localhost:8000/users/647252167debe3060ef9968e HTTP/1.1
+GET http://localhost:8000/users/6475a3ee04da111295c32b14 HTTP/1.1
 
 ### update user info
-PUT http://localhost:8000/users/636cfec9477f85fec253944e HTTP/1.1
+PUT http://localhost:8000/users/6475dc31cf4acc10d036f5b7 HTTP/1.1
 Content-Type: application/json
 
 {
   "firstName": "John",
   "lastName": "Doe",
-  "email": "johnDoe@gmail.com",
-  "password": "johshdkhk",
+  "email": "joD@gmail.com",
+  "password": "chukwuprince",
   "phoneNumber": "081"
 }
 
 ### Delete a user
-DELETE http://localhost:8000/users/646f19f53049f43e824b7fe4 HTTP/1.1
+DELETE http://localhost:8000/users/6475dec127a126d2935aa56d HTTP/1.1
 
 ### auth a user
 GET http://localhost:8000/auth/google HTTP/1.1

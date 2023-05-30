@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 const signupSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: true,
     trim: true,
     required: [true, "Email is required!"],
     validate: {
@@ -56,15 +55,16 @@ signupSchema.pre("validate", function () {
   }
 });
 
-signupSchema.pre("validate", async function (next) {
-  let User = this.constructor;
-  let existingUser = await User.findOne({ email: this.email });
-  if (existingUser) {
-    throw createError(400, "User already exists");
-  } else {
-    return false;
-  }
-});
+// signupSchema.pre("validate", async function (next) {
+//   console.log("Finding user")
+//   let User = this.constructor;
+//   let existingUser = await User.findOne({ email: this.email });
+//   if (existingUser) {
+//     throw createError(400, "User already exists");
+//   } else {
+//     return false;
+//   }
+// });
 
 signupSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {

@@ -1,8 +1,6 @@
 const rootRouter = require("express").Router();
-const { ensureAuth, ensureGuest } = require("../middlewares/auth");
 
-rootRouter
-  
+rootRouter 
   .use("/auth", require('./auth'))
   .use("/shops", require("./shops"))
   .use("/users", require("./users"))

@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
 const mongodb = require("./db/connect");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const path = require('path');
+const cookieParser = require('cookie-parser')
 require("dotenv").config();
 require('./config/passport')(passport);
 
@@ -25,7 +24,7 @@ app
     secret: 'keyboard cat',
     resave: false,
     // don't save a session until something is saved
-    saveUninitialized: false,
+    saveUninitialized: true,
     // cookie: { secure: true },
     store: MongoStore.create({mongoUrl: process.env.URI})
   }))
@@ -33,6 +32,9 @@ app
   // Passport middleware
   .use(passport.initialize())
   .use(passport.session())
+  
+  .use(cookieParser())
+
 
   .use("/", require("./routes/index"))
   .use((error, req, res, next) => {

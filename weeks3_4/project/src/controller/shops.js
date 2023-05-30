@@ -15,15 +15,13 @@ async function getShops(req, res, next) {
 }
 
 async function getProducts(req, res, next) {
-  let col = returnCollection();
-
   let id = new ObjectId(req.params.shopId);
-  let shop = await col.findOne({ _id: id });
+  let shop = await Shop.findOne({ _id: id });
+  console.log(shop);
   let products = await fetch(`${shop.url}/products`)
     .then((product) => product.json())
     .catch((err) => console.log(err, err.message));
 
-  
   res.setHeader("Content-Type", "application/json");
   if (shop.name == "Storest") {
     res.status(200).send(products.data);
@@ -33,10 +31,8 @@ async function getProducts(req, res, next) {
 }
 
 async function getCategories(req, res) {
-  let col = returnCollection();
   let id = new ObjectId(req.params.shopId);
-  let shop = await col.findOne({ _id: id });
-
+  let shop = await Shop.findOne({ _id: id });
   let categories;
   if (shop.name == "Fake Store") {
     categories = await fetch(`${shop.url}/products/categories`).then(
@@ -47,7 +43,7 @@ async function getCategories(req, res) {
       category.json()
     );
   }
-
+  res.setHeader("Content-Type", "application/json");
   if (shop.name == "Storest") {
     res.status(200).send(categories.data);
   } else {
@@ -56,9 +52,10 @@ async function getCategories(req, res) {
 }
 
 async function getProduct(req, res, next) {
-  let col = returnCollection();
   let id = new ObjectId(req.params.shopId);
-  let shop = await col.findOne({ _id: id });
+  let shop = await Shop.findOne({ _id: id });
+
+  let product;
 
   try {
     // Get all products
@@ -66,33 +63,21 @@ async function getProduct(req, res, next) {
       product.json()
     );
 
+    // filter single product
     if (shop.name == "Storest") {
       // find the product name of product matching id in request parameter
-      let product = products.data.find(
-        (item) => item._id == req.params.productId
-      );
-
-      if (!product) {
-        throw createError(400, "Product does not exist in database.");
-      }
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).send(product);
+      product = products.data.find((item) => item._id == req.params.productId);
     } else {
-      let product = products.find((item) => item.id == req.params.productId);
-
-      if (!product) {
-        throw createError(400, "Product does not exist in database.");
-      }
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).send(product);
+      product = products.find((item) => item.id == req.params.productId);
     }
+    if (!product) {
+      throw createError(400, "Product does not exist in database.");
+    }
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).send(product);
   } catch (error) {
     next(error);
   }
-}
-
-function returnCollection(dbname = "ecommerce", collection = "shops") {
-  return connection.getDb().db(dbname).collection(collection);
 }
 
 module.exports = { getShops, getProducts, getCategories, getProduct };
