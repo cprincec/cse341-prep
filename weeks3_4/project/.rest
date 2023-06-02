@@ -12,7 +12,6 @@ GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/categories HTTP/1.1
 ### Get a product's details from a shop
 GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/products/61ab42d00f34753bcedfa79e HTTP/1.1
 
-
 ### Create account with form
 POST http://localhost:8000/users HTTP/1.1
 Content-Type: application/json

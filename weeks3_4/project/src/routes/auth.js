@@ -1,13 +1,10 @@
 const passport = require("passport");
-const { ensureGuest } = require("../middlewares/auth");
 const authRouter = require("express").Router();
 
 authRouter
-  .post(
-    "/login",
-    passport.authenticate('local'), (req, res) => {   
-      res.status(200).json(req.user)}   
-  )
+  .post("/login", passport.authenticate("local"), (req, res) => {
+    res.status(200).json(req.user);
+  })
   .get(
     "/google",
     passport.authenticate("google", { scope: ["profile", "email"] })
