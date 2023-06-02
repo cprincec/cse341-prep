@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Contacts Api",
-    "description": "An API for shopping from various supermerkets. You can GET available supermarkets, GET all products, categories, single product in supermarket of choice. You, can also POST (create) and account (even with google, if you like), PUT (update) account details, DELETE account, Login in and many more to come.",
+    "description": "An API for shopping from various supermerkets. You can GET available supermarkets, GET all products, categories, single product in supermarket of choice. You, can also POST (create) an account (even with google, if you like), PUT (update) account details, DELETE account, Login in, logout and many more to come.",
     "version": "1.0.0"
   },
   "host": "centeralmall.onrender.com",
