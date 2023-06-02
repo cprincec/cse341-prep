@@ -31,7 +31,7 @@ Content-Type: application/json
 
 {
   "email": "joD@gmail.com",
-  "password": "crincehkhks"
+  "password": "crinchkhks"
 }
 
 ### logout

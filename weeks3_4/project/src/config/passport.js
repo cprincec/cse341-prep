@@ -63,6 +63,7 @@ module.exports = function (passport) {
           // If user is not found, return error
           if (!user) {
             return done(null, false, {
+              status: 401,
               message: "Incorrect email or password",
             });
           }
@@ -74,6 +75,7 @@ module.exports = function (passport) {
           if (!isMatch) {
             console.log("Inside !isMatch");
             return done(null, false, {
+              status: 401,
               message: "Incorrect email or password",
             });
           }

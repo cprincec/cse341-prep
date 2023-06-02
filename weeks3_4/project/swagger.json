@@ -2,16 +2,37 @@
   "swagger": "2.0",
   "info": {
     "title": "Contacts Api",
-    "description": "Description",
+    "description": "An API for shopping from various supermerkets. You can GET available supermarkets, GET all products, categories, single product in supermarket of choice. You, can also POST (create) and account (even with google, if you like), PUT (update) account details, DELETE account, Login in and many more to come.",
     "version": "1.0.0"
   },
   "host": "centeralmall.onrender.com",
   "basePath": "/",
   "schemes": ["https"],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Methods to GET, POST, PUT, and DELETE users."
+    },
+    {
+      "name": "Shops",
+      "description": "Methods to GET shops, products, single product, available categories in a shop."
+    },
+    {
+      "name": "Authentication",
+      "description": "Methods to Login and logout."
+    },
+    {
+      "name": "Documentation",
+      "description": "Methods to GET the Swagger UI documentation."
+    } 
+  ],
   "paths": {
     "/auth/login": {
       "post": {
-        "description": "",
+        "tags": ["Authentication"],
+        "description": "Login with username and password to access proteced endpoints",
+        "summary": "Login to access protected routes",
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -34,31 +55,55 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
     "/auth/logout": {
       "get": {
-        "description": "Logout the logging in user. This will prevent access to protected routes",
+        "description": "Logout the logged in user. User will be redirected to the shops route. This will prevent access to protected routes",
+        "tags": ["Authentication"],
+        "summary": "Logout. This will restrict access protected routes and redirect to shops endpoint.",
+        "produces": ["application/json"],
         "parameters": [],
-        "responses": {}
+        "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Server error"
+            }
+        }
       }
     },
     "/shops/": {
       "get": {
-        "description": "Fetch all available shops",
+        "tags": ["Shops"],
+        "summary": "GET all available shops.",
+        "produces": ["application/json"],
+        "description": "See all the shops you can shop from.",
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
     "/shops/{shopId}/products": {
       "get": {
-        "description": "Get all products in a specific shop",
+        "tags": ["Shops"],
+        "summary": "GET all available products in a shop.",
+        "description": "Get all products in the selected shop of your choice",
         "produces": ["application/json"],
         "parameters": [
           {
@@ -72,12 +117,17 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
     "/shops/{shopId}/categories": {
       "get": {
+        "tags": ["Shops"],
+        "summary": "GET all available products categories in a shop.",
         "description": "Get list of product categories available in a shop",
         "produces": ["application/json"],
         "parameters": [
@@ -91,12 +141,17 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
     "/shops/{shopId}/products/{productId}": {
       "get": {
+        "tags": ["Shops"],
+        "summary": "GET information of a product in a shop.",
         "description": "Get details of a specific product in a shop",
         "produces": ["application/json"],
         "parameters": [
@@ -118,22 +173,35 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
     "/users/": {
       "get": {
+        "tags": ["Users"],
+        "summary": "GET all registered users",
         "description": "See all registered users. (THIS IS A PROTECTED ROUTE)",
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Sign up/Create an account",
+        "description": "Create a user account",
         "parameters": [
           {
             "name": "body",
@@ -163,13 +231,20 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
     "/users/{userId}": {
-      "get": {
-        "description": "See details of logged in user. (THIS IS A PROTECTED ROUTE)",
+      "get": { "tags": ["Users"],
+      "summary": "GET logged in user information.",
+      "description": "See details of logged in user. (THIS IS A PROTECTED ROUTE)",
         "parameters": [
           {
             "name": "userId",
@@ -181,11 +256,19 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       },
       "put": {
-        "description": "Update logged in user details (PROTECTED ROUTE)",
+      "tags": ["Users"],
+      "summary": "Update logged in user information.",
+      "description": "Update logged in user details (PROTECTED ROUTE)",
         "parameters": [
           {
             "name": "userId",
@@ -224,10 +307,15 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       },
       "delete": {
+      "tags": ["Users"],
+      "summary": "DELETE logged in user information.",
         "description": "Delete a logged in user account (PROTECTED ROUTE)",
         "parameters": [
           {
@@ -240,6 +328,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
