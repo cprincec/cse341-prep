@@ -5,11 +5,17 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const morgan = require("morgan"); // This is used for logging http requests
+const helmet = require("helmet"); // This is a security middleware that protects our app from attackers.
+const cors = require("cors");
 require("dotenv").config();
 require("./config/passport")(passport);
 const PORT = process.env.PORT || 3000;
 
 app
+  .use(cors())
+  .use(morgan("common")) // morgan middleware using the 'common'  logging format;
+  .use(helmet())
   .use(express.json())
   .use(bodyParser.json())
   .use((req, res, next) => {
