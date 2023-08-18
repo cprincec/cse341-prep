@@ -20,17 +20,19 @@ app
   .use(bodyParser.json())
   .use((req, res, next) => {
     const allowedOrigins = [
-          "http://localhost:5173",
-          "http://192.168.55.198:5173",
-        ]; const origin = req.headers.origin;
+      "http://localhost:5173",
+      "http://192.168.55.198:5173",
+      "https://centralmall.netlify.app",
+    ];
+    const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
-         res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader("Access-Control-Allow-Origin", origin);
     }
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Credentials', true);
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", true);
     return next();
-  });
+  })
   // .use((req, res, next) => {
   //   const allowedOrigins = [
   //     "http://localhost:5173",
@@ -56,7 +58,7 @@ app
       resave: false,
       // don't save a session until something is saved
       saveUninitialized: false,
-      cookie: { secure: true, httpOnly: false, maxAge: 1000 * 72 * 60 },
+      cookie: { secure: false, httpOnly: false, maxAge: 1000 * 72 * 60 },
       store: MongoStore.create({ mongoUrl: process.env.URI }),
     })
   )
