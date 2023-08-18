@@ -19,11 +19,17 @@ app
   .use(express.json())
   .use(bodyParser.json())
   .use((req, res, next) => {
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "http://localhost:5173, http://192.168.55.198:5173"
-    );
-    next();
+    const allowedOrigins = [
+      "http://localhost:5173",
+      "http://192.168.55.198:5173",
+    ];
+
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    return next();
   })
 
   // Sessions
