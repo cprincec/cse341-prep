@@ -53,13 +53,14 @@ async function getUsers(req, res) {
 
 async function getUserById(req, res, next) {
   let id;
-
+  console.log("in", req.params.userId);
   try {
     id = new ObjectId(req.params.userId);
   } catch (error) {
     error.message = "Invalid user id";
     error.status = 500;
-    next(error);
+    console.log(error);
+    return next(error);
   }
 
   // Check that the authenticated user is the person

@@ -1,9 +1,20 @@
 const passport = require("passport");
 const authRouter = require("express").Router();
+const userController = require("../controller/users");
 
 authRouter
   .post("/login", passport.authenticate("local"), (req, res) => {
     res.status(200).json(req.user);
+  })
+  // This route is getting user with an active session
+  // For situations when i dont want to store data in the browser
+  .get("/refresh", (req, res, next) => {
+    console.log(req.session);
+    console.log(req.sessionID);
+    if (req.session.passport) {
+      req.params.userId = req.session.passport.user;
+      userController.getUserById(req, res, next);
+    }
   })
   .get(
     "/google",

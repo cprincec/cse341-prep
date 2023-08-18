@@ -43,7 +43,7 @@ app
       resave: false,
       // don't save a session until something is saved
       saveUninitialized: false,
-      cookie: { secure: false, httpOnly: false, maxAge: 1000 * 24 * 60 },
+      cookie: { secure: false, httpOnly: true, maxAge: 1000 * 24 * 60 },
       store: MongoStore.create({ mongoUrl: process.env.URI }),
     })
   )
