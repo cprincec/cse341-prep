@@ -21,7 +21,7 @@ app
   .use((req, res, next) => {
     res.setHeader(
       "Access-Control-Allow-Origin",
-      "http://localhost:5173/, http://192.168.55.198:5173/"
+      "http://localhost:5173, http://192.168.55.198:5173"
     );
     next();
   })
