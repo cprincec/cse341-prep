@@ -56,6 +56,7 @@ app
     session({
       secret: process.env.SESSION_SECRET,
       resave: false,
+      name: "test",
       // don't save a session until something is saved
       saveUninitialized: false,
       cookie: { secure: false, httpOnly: false, maxAge: 1000 * 72 * 60 },
