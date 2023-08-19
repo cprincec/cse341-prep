@@ -27,12 +27,16 @@ app
     ];
     const origin = req.headers.origin;
     console.log(origin);
+    cons;
     if (allowedOrigins.includes(origin)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
     }
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.header("Access-Control-Allow-Credentials", true);
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    res.setHeader("Access-Control-Allow-Credentials", true);
     return next();
   })
   // .use((req, res, next) => {
@@ -59,6 +63,7 @@ app
       secret: process.env.SESSION_SECRET,
       resave: false,
       name: "test",
+      sameSite: "none",
       // don't save a session until something is saved
       saveUninitialized: false,
       cookie: { secure: true, httpOnly: false, maxAge: 1000 * 72 * 60 },
