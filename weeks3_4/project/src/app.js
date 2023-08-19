@@ -24,15 +24,28 @@ app
       "http://192.168.55.198:5173",
       "https://centralmall.netlify.app",
     ];
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-      res.setHeader("Access-Control-Allow-Origin", origin);
+    const requestOrigin = req.headers.origin;
+    let origin;
+    if (allowedOrigins.includes(requestOrigin)) {
+      origin = requestOrigin;
     }
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.header("Access-Control-Allow-Credentials", true);
-    return next();
+    cors({ credentials: true, origin: origin });
   })
+  // .use((req, res, next) => {
+  //   const allowedOrigins = [
+  //     "http://localhost:5173",
+  //     "http://192.168.55.198:5173",
+  //     "https://centralmall.netlify.app",
+  //   ];
+  //   const origin = req.headers.origin;
+  //   if (allowedOrigins.includes(origin)) {
+  //     res.setHeader("Access-Control-Allow-Origin", origin);
+  //   }
+  //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  //   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  //   res.header("Access-Control-Allow-Credentials", true);
+  //   return next();
+  // })
   // .use((req, res, next) => {
   //   const allowedOrigins = [
   //     "http://localhost:5173",
