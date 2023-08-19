@@ -27,7 +27,7 @@ app
     ];
     const origin = req.headers.origin;
     console.log(origin);
-    cons;
+    console.log(res.headersSent);
     if (allowedOrigins.includes(origin)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
     }
