@@ -7,7 +7,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const morgan = require("morgan"); // This is used for logging http requests
 const helmet = require("helmet"); // This is a security middleware that protects our app from attackers.
-// const cors = require("cors");
+const cors = require("cors");
 require("dotenv").config();
 require("./config/passport")(passport);
 const PORT = process.env.PORT || 3000;
