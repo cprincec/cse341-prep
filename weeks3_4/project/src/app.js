@@ -20,14 +20,13 @@ app
   .use(bodyParser.json())
 
   .use((req, res, next) => {
+    console.log("app");
     const allowedOrigins = [
       "http://localhost:5173",
       "http://192.168.55.198:5173",
       "https://centralmall.netlify.app",
     ];
     const origin = req.headers.origin;
-    console.log(origin);
-    console.log(res.headersSent);
     if (allowedOrigins.includes(origin)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
     }
@@ -57,23 +56,22 @@ app
   //   return next();
   // })
 
-  // Sessions
-  .use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      name: "test",
-      sameSite: "none",
-      // don't save a session until something is saved
-      saveUninitialized: false,
-      cookie: { secure: true, httpOnly: false, maxAge: 1000 * 72 * 60 },
-      store: MongoStore.create({ mongoUrl: process.env.URI }),
-    })
-  )
+  // .use(
+  //   session({
+  //     secret: process.env.SESSION_SECRET,
+  //     resave: false,
+  //     name: "test",
+  //     sameSite: "none",
+  //     // don't save a session until something is saved
+  //     saveUninitialized: false,
+  //     cookie: { secure: true, httpOnly: false, maxAge: 1000 * 72 * 60 },
+  //     store: MongoStore.create({ mongoUrl: process.env.URI }),
+  //   })
+  // )
 
   // Passport middleware
   .use(passport.initialize())
-  .use(passport.session())
+  // .use(passport.session())
 
   .use("/", require("./routes/index"))
   .use((error, req, res, next) => {

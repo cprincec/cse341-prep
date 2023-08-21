@@ -2,19 +2,17 @@ const usersRouter = require("express").Router();
 const { ensureAuth, ensureGuest } = require("../middlewares/auth");
 const controller = require("../controller/users");
 
+const authMiddleware = require("../middlewares/authenticate");
+usersRouter.post("/login", controller.loginUser);
 usersRouter
   .route("/")
-  .get(ensureAuth, (req, res) => {
-    console.log(req.session);
-    controller.getUsers;
-  })
+  .get(authMiddleware.authenticate, controller.getUsers)
   .post(controller.createUser);
 
 usersRouter
   .route("/:userId")
-  .get(ensureAuth, controller.getUserById)
-  .put(ensureAuth, controller.updateUser)
-  .delete(ensureAuth, controller.deleteUser);
-
+  .get(authMiddleware.authenticate, controller.getUserById)
+  .put(authMiddleware.authenticate, controller.updateUser)
+  .delete(authMiddleware.authenticate, controller.deleteUser);
 
 module.exports = usersRouter;

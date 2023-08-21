@@ -1,6 +1,23 @@
 const createError = require("http-errors");
 const User = require("../model/User");
 const ObjectId = require("mongodb").ObjectId;
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+async function loginUser(req, res, next) {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    res.status(401).send("incorrect email or password");
+  }
+
+  const match = bcrypt.compare(req.body.password, user.password);
+  if (!match) {
+    res.status(401).send("incorrect password");
+  }
+
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);
+  res.status(200).json({ user, token });
+}
 
 async function createUser(req, res, next) {
   try {
@@ -52,30 +69,29 @@ async function getUsers(req, res) {
 }
 
 async function getUserById(req, res, next) {
+  console.log(req.user);
   let id;
-  console.log("in", req.params.userId);
   try {
     id = new ObjectId(req.params.userId);
   } catch (error) {
     error.message = "Invalid user id";
     error.status = 500;
-    console.log(error);
     return next(error);
   }
-
   // Check that the authenticated user is the person
   // trying to access this
-  let loggedInUserId = req.user._id.toString();
-  if (loggedInUserId != id) {
-    res.redirect("http://localhost:8000/auth/logout");
+  let authorizedUserId = req.user.userId;
+  if (authorizedUserId != id) {
+    res.status(401).send("unauthorized");
     return;
   }
 
   try {
     let user = await User.findOne({ _id: id });
     if (!user) {
-      throw createError(400, "User does not exist");
+      throw createError(401, "Incorrect Email or password");
     }
+
     res.status(200).json(user);
   } catch (error) {
     next(error);
@@ -84,6 +100,11 @@ async function getUserById(req, res, next) {
 
 async function updateUser(req, res, next) {
   const userId = new ObjectId(req.params.userId);
+  let authorizedUserId = req.user.userId;
+  if (authorizedUserId != userId) {
+    res.status(401).send("unauthorized");
+    return;
+  }
 
   try {
     let userfound = await User.findOne({ _id: userId });
@@ -111,6 +132,11 @@ async function updateUser(req, res, next) {
 }
 
 async function deleteUser(req, res, next) {
+  let authorizedUserId = req.user.userId;
+  if (authorizedUserId != id) {
+    res.status(401).send("unauthorized");
+    return;
+  }
   let userId = new ObjectId(req.params.userId);
   try {
     let result = await User.findByIdAndRemove({ _id: userId });
@@ -129,6 +155,7 @@ async function deleteUser(req, res, next) {
 // }
 
 module.exports = {
+  loginUser,
   createUser,
   getUsers,
   getUserById,

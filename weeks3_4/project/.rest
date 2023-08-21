@@ -20,30 +20,33 @@ Content-Type: application/json
   "oAuth": "0",
   "firstName": "ebuka",
   "lastName": "Doe",
-  "email": "jooD@gmail.com",
+  "email": "joaD@gmail.com",
   "password": "crincehkhks",
   "phoneNumber": "08139"
 }
 
-### login
-POST http://localhost:8000/auth/login
+### login user
+POST http://localhost:8000/users/login
 Content-Type: application/json
 
 {
-  "email": "peterdury@gmail.com",
-  "password": "peterdury"
+  "email": "chukwuprincecc@gmail.com",
+  "password": "8991Lapagayo"
 }
 
-### logout
-GET http://localhost:8000/auth/refresh
+// This route was removed because the api no longer uses session
+# ### logout
+# GET http://localhost:8000/users/logout
 
 
 ### Get all users
-
 GET http://localhost:8000/users HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGRlODRhZWE1YjIzZmQ1N2RmNjNmNDUiLCJpYXQiOjE2OTI2MjkyODh9.VT-GMxezte6qIOOqfZ7_lkVY85XNBGSBwaS2Bx1Hla0
+
 
 ### Get a user
-GET http://localhost:8000/users/6475a3ee04da111295c32b14 HTTP/1.1
+GET http://localhost:8000/users/64de84aea5b23fd57df63f45 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGRlODRhZWE1YjIzZmQ1N2RmNjNmNDUiLCJpYXQiOjE2OTI2NDMwODB9.Y0DQCbCefLYJ4pgWP5LMEZLd4sPSgzAmGB2FBy_uHpE
 
 ### update user info
 PUT http://localhost:8000/users/6475dc31cf4acc10d036f5b7 HTTP/1.1
@@ -58,7 +61,7 @@ Content-Type: application/json
 }
 
 ### Delete a user
-DELETE http://localhost:8000/users/6475dec127a126d2935aa56d HTTP/1.1
+DELETE http://localhost:8000/users/64de6869fba665aa65d9191b HTTP/1.1
 
 ### auth a user
 GET http://localhost:8000/auth/google HTTP/1.1
