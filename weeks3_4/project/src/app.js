@@ -25,6 +25,7 @@ app
       "http://localhost:5173",
       "http://192.168.55.198:5173",
       "https://centralmall.netlify.app",
+      "https://accounts.google.com",
     ];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
