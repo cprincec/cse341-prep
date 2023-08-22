@@ -7,41 +7,41 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const morgan = require("morgan"); // This is used for logging http requests
 const helmet = require("helmet"); // This is a security middleware that protects our app from attackers.
-// const cors = require("cors");
+const cors = require("cors");
 require("dotenv").config();
 require("./config/passport")(passport);
 const PORT = process.env.PORT || 3000;
 
 app
-  // .use(cors())
+  .use(cors())
   .use(morgan("common")) // morgan middleware using the 'common'  logging format;
   .use(helmet())
   .use(express.json())
   .use(bodyParser.json())
 
-  .use((req, res, next) => {
-    console.log("app");
-    const allowedOrigins = [
-      "http://localhost:5173",
-      "http://192.168.55.198:5173",
-      "https://centralmall.netlify.app",
-      "https://accounts.google.com",
-    ];
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-      res.setHeader("Access-Control-Allow-Origin", origin);
-    }
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
-    );
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    return next();
-  })
+  //   .use((req, res, next) => {
+  //     console.log("app");
+  //     const allowedOrigins = [
+  //       "http://localhost:5173",
+  //       "http://192.168.55.198:5173",
+  //       "https://centralmall.netlify.app",
+  //       "https://accounts.google.com",
+  //     ];
+  //     const origin = req.headers.origin;
+  //     if (allowedOrigins.includes(origin)) {
+  //       res.setHeader("Access-Control-Allow-Origin", origin);
+  //     }
+  //     res.setHeader(
+  //       "Access-Control-Allow-Methods",
+  //       "GET, POST, PUT, DELETE, OPTIONS"
+  //     );
+  //     res.setHeader(
+  //       "Access-Control-Allow-Headers",
+  //       "Content-Type, Authorization"
+  //     );
+  //     res.setHeader("Access-Control-Allow-Credentials", true);
+  //     return next();
+  //   })
 
   // Passport middleware
   .use(passport.initialize())
