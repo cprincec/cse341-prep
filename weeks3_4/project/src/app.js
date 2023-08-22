@@ -13,47 +13,46 @@ require("./config/passport")(passport);
 const PORT = process.env.PORT || 3000;
 
 app
-  .use(cors())
+  // .use(cors())
   .use(morgan("common")) // morgan middleware using the 'common'  logging format;
   .use(helmet())
   .use(express.json())
   .use(bodyParser.json())
+  // .use((req, res, next) => {
+  //   res.setHeader("Access-Control-Allow-Origin", "*");
+  //   res.setHeader(
+  //     "Access-Control-Allow-Headers",
+  //     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+  //   );
+  //   res.setHeader(
+  //     "Access-Control-Allow-Methods",
+  //     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  //   );
+  //   next();
+  // })
+
   .use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-    );
+    const allowedOrigins = [
+      "http://localhost:5173",
+      "http://192.168.55.198:5173",
+      "https://centralmall.netlify.app",
+      "https://accounts.google.com",
+    ];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
     res.setHeader(
       "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+      "GET, POST, PUT, DELETE, OPTIONS"
     );
-    next();
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    return next();
   })
-
-  //   .use((req, res, next) => {
-  //     console.log("app");
-  //     const allowedOrigins = [
-  //       "http://localhost:5173",
-  //       "http://192.168.55.198:5173",
-  //       "https://centralmall.netlify.app",
-  //       "https://accounts.google.com",
-  //     ];
-  //     const origin = req.headers.origin;
-  //     if (allowedOrigins.includes(origin)) {
-  //       res.setHeader("Access-Control-Allow-Origin", origin);
-  //     }
-  //     res.setHeader(
-  //       "Access-Control-Allow-Methods",
-  //       "GET, POST, PUT, DELETE, OPTIONS"
-  //     );
-  //     res.setHeader(
-  //       "Access-Control-Allow-Headers",
-  //       "Content-Type, Authorization"
-  //     );
-  //     res.setHeader("Access-Control-Allow-Credentials", true);
-  //     return next();
-  //   })
 
   // Passport middleware
   .use(passport.initialize())
