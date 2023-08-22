@@ -29,7 +29,7 @@ app
       "GET, POST, PUT, DELETE, PATCH, OPTIONS"
     );
     next();
-  });
+  })
 
   //   .use((req, res, next) => {
   //     console.log("app");
