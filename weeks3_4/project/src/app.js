@@ -37,6 +37,7 @@ app
       "http://192.168.186.198:5173",
       "http://192.168.144.198:5173",
       "http://192.168.55.198:5173",
+      "http://192.168.99.198:5173",
       "http://192.168.234.198:5173",
       "https://centralmall.netlify.app",
       "https://accounts.google.com",
