@@ -5,7 +5,7 @@ async function authenticate(req, res, next) {
 
   const auth = req.headers.authorization;
   if (!auth) {
-    res.status(401).send("Not authorized");
+    res.status(401).json("Not authorized");
   } else {
     const token = auth.split(" ")[1];
     jwt.verify(token, process.env.JWT_KEY, (err, user) => {

@@ -4,9 +4,9 @@ const createError = require("http-errors");
 
 async function getShops(req, res, next) {
   try {
-    console.log("Getting shops")
+    console.log("Getting shops");
     let shops = await Shop.find({});
-    console.log("Shops: ", shops)
+    console.log("Shops: ", shops);
     if (!shops) {
       throw createError(400, "No shop found in database");
     }
@@ -26,9 +26,9 @@ async function getProducts(req, res, next) {
 
   res.setHeader("Content-Type", "application/json");
   if (shop.name == "Storest") {
-    res.status(200).send(products.data);
+    res.status(200).json(products.data);
   } else {
-    res.status(200).send(products);
+    res.status(200).json(products);
   }
 }
 
@@ -47,9 +47,9 @@ async function getCategories(req, res) {
   }
   res.setHeader("Content-Type", "application/json");
   if (shop.name == "Storest") {
-    res.status(200).send(categories.data);
+    res.status(200).json(categories.data);
   } else {
-    res.status(200).send(categories);
+    res.status(200).json(categories);
   }
 }
 
@@ -76,7 +76,7 @@ async function getProduct(req, res, next) {
       throw createError(400, "Product does not exist in database.");
     }
     res.setHeader("Content-Type", "application/json");
-    res.status(200).send(product);
+    res.status(200).json(product);
   } catch (error) {
     next(error);
   }

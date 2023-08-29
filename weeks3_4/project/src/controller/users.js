@@ -7,12 +7,12 @@ const jwt = require("jsonwebtoken");
 async function loginUser(req, res, next) {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    res.status(401).send("incorrect email or password");
+    res.status(401).json("incorrect email or password");
   }
 
   const match = bcrypt.compare(req.body.password, user.password);
   if (!match) {
-    res.status(401).send("incorrect password");
+    res.status(401).json("incorrect password");
   }
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);
@@ -82,7 +82,7 @@ async function getUserById(req, res, next) {
   // trying to access this
   let authorizedUserId = req.user.userId;
   if (authorizedUserId != id) {
-    res.status(401).send("unauthorized");
+    res.status(401).json("unauthorized");
     return;
   }
 
@@ -102,7 +102,7 @@ async function updateUser(req, res, next) {
   const userId = new ObjectId(req.params.userId);
   let authorizedUserId = req.user.userId;
   if (authorizedUserId != userId) {
-    res.status(401).send("unauthorized");
+    res.status(401).json("unauthorized");
     return;
   }
 
@@ -134,7 +134,7 @@ async function updateUser(req, res, next) {
 async function deleteUser(req, res, next) {
   let authorizedUserId = req.user.userId;
   if (authorizedUserId != id) {
-    res.status(401).send("unauthorized");
+    res.status(401).json("unauthorized");
     return;
   }
   let userId = new ObjectId(req.params.userId);
