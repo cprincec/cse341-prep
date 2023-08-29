@@ -7,12 +7,12 @@ const jwt = require("jsonwebtoken");
 async function loginUser(req, res, next) {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    res.status(401).json("incorrect email or password");
+    return res.status(401).json("incorrect email or password");
   }
 
   const match = bcrypt.compare(req.body.password, user.password);
   if (!match) {
-    res.status(401).json("incorrect password");
+    return res.status(401).json("incorrect password");
   }
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);
