@@ -30,8 +30,8 @@ POST http://localhost:8000/users/login
 Content-Type: application/json
 
 {
-  "email": "chukwuprincecc@gmail.com",
-  "password": "8991Lapagayo"
+  "email": "peterdury@gmail.com",
+  "password": "peterdur"
 }
 
 // This route was removed because the api no longer uses session

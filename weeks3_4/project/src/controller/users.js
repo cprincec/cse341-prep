@@ -6,13 +6,19 @@ const jwt = require("jsonwebtoken");
 
 async function loginUser(req, res, next) {
   const user = await User.findOne({ email: req.body.email });
+
   if (!user) {
-    return res.status(401).json("incorrect email or password");
+    return res
+      .status(401)
+      .json({ error: { message: "Incorrect email or password" } });
   }
 
-  const match = bcrypt.compare(req.body.password, user.password);
+  const match = await bcrypt.compare(req.body.password, user.password);
+
   if (!match) {
-    return res.status(401).json("incorrect password");
+    return res
+      .status(401)
+      .json({ error: { message: "Incorrect email or password" } });
   }
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);
@@ -82,7 +88,7 @@ async function getUserById(req, res, next) {
   // trying to access this
   let authorizedUserId = req.user.userId;
   if (authorizedUserId != id) {
-    res.status(401).json("unauthorized");
+    res.status(401).json({ error: { message: "unauthorized" } });
     return;
   }
 
@@ -102,7 +108,7 @@ async function updateUser(req, res, next) {
   const userId = new ObjectId(req.params.userId);
   let authorizedUserId = req.user.userId;
   if (authorizedUserId != userId) {
-    res.status(401).json("unauthorized");
+    res.status(401).json({ error: { message: "Unauthorized" } });
     return;
   }
 
@@ -120,11 +126,11 @@ async function updateUser(req, res, next) {
 
     let result = await userfound.save();
     if (result) {
-      res.status(200).json({ message: "User updated successfully" });
+      res.status(200).json({ error: { message: "User updated successfully" } });
     } else {
-      res
-        .status(404)
-        .json({ message: "There was a problem creating user. Try again" });
+      res.status(404).json({
+        error: { message: "There was a problem creating user. Try again" },
+      });
     }
   } catch (error) {
     next(error);
@@ -134,7 +140,7 @@ async function updateUser(req, res, next) {
 async function deleteUser(req, res, next) {
   let authorizedUserId = req.user.userId;
   if (authorizedUserId != id) {
-    res.status(401).json("unauthorized");
+    res.status(401).json({ error: { message: "Unauthorized" } });
     return;
   }
   let userId = new ObjectId(req.params.userId);
