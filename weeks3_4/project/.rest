@@ -4,7 +4,7 @@
 GET http://localhost:8000/shops
 
 ### Get all products in a shop
-GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/products HTTP/1.1
+GET http://localhost:8000/shops/6468283d3407ec9bc8ada836/products HTTP/1.1
 
 ### Get all product categories in a shop
 GET http://localhost:8000/shops/646828e23407ec9bc8ada83d/categories HTTP/1.1
@@ -20,8 +20,8 @@ Content-Type: application/json
   "oAuth": "0",
   "firstName": "ebuka",
   "lastName": "Doe",
-  "email": "joaD@gmail.com",
-  "password": "crincehkhks",
+  "email": "ebukadoe@gmail.com",
+  "password": "ebuka",
   "phoneNumber": "08139"
 }
 
@@ -62,6 +62,7 @@ Content-Type: application/json
 
 ### Delete a user
 DELETE http://localhost:8000/users/64de6869fba665aa65d9191b HTTP/1.1
+
 
 ### auth a user
 GET http://localhost:8000/auth/google HTTP/1.1
